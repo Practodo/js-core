@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Hello Pradeep</p>
+    <p id="forin"></p>
+    <p id="forinname"></p>
+    <input type="text" id="iage">
+    <button id="agebut" onclick="ageFun()">Check Person</button>
+    <p id="pname"></p>
+    <p id="page"></p>
+    <p id="fpage"></p>
+    <p id="pgender"></p>
+    <p id="pgGen"></p>
+
+    <p id="conFname"></p>
+
+    <script>
+        var student = [{"name" : "Pradeep", "age" : " 30", "gender" : "male"},
+        {"name" : "anitha", "age" : " 20", "gender" : "female"},
+        {"name" : "Prado", "age" : " 25", "gender" : "male"}];
+    
+    var txt = "";
+    var nametxt = "";
+    for(var std in student){
+        txt += JSON.stringify(student[std]["age"]);
+        for(name in std){
+            nametxt += student[std]["name"];
+        }
+    }
+    document.getElementById('forin').innerHTML = txt;
+    document.getElementById('forinname').innerHTML = nametxt;
+    
+    var person = {
+            "firstname" : "Pradeep",
+            "lastname" : "Naidu", 
+            "age" : 30, 
+            "gender" : "male",
+            get name() {
+                return this.firstname + " " + this.lastname; 
+            },
+            set spAge(age){
+                this.age = age;
+            },
+            get pGender(){
+                return this.gender;
+            },
+            get pAge(){
+                if(this.age < 12){
+                    this.age = "child"; 
+                    return this.age;
+                }
+                if(this.age > 12 && this.age < 19){
+                    this.age = "Youth"; 
+                    return this.age;
+                }
+                if(this.age > 19 && this.age <= 30){
+                    this.age = "Young"; 
+                    return this.age;
+                }
+                if(this.age > 30 && this.age <= 45){
+                    this.age = "Middle"; 
+                    return this.age;
+                }
+                if(this.age > 45 ){
+                    this.age = "old"; 
+                    return this.age;
+                }
+                return this.age;
+            }
+        };
+
+        Object.defineProperty(person, "sGen", { set : function(value) { this.gender = value; } });
+        Object.defineProperty(person, "gGen", { get : function() { return this.gender; } });
+
+        function ageFun(){
+            person.spAge = document.getElementById('iage').value;
+            document.getElementById('page').innerHTML = person.pAge;
+        };
+       
+        document.getElementById('pname').innerHTML = person.name;
+        document.getElementById('pgender').innerHTML = person.pGender;
+        person.sGen = "female";
+        document.getElementById('pgGen').innerHTML = person.gGen;
+
+        function Person(firstname, lastname, age, gender, nation){
+            this.firstName = firstname;
+            this.lastName = lastname;
+            this.age = age;
+            this.gender = gender;
+        }
+
+        var friend = new Person("Prado", "Neo",  30, "male");
+        Object.defineProperty(friend, "sfn", {set : function(value) {this.firstName = value; } });
+        friend.sfn = "Billy";
+        document.getElementById('conFname').innerHTML = friend.firstName + " " + friend.lastName;
+
+        Person.nation = "Indian";
+        var son = new Person("Havi", "Buvi",  1, "male", "American");
+        console.log(son.nation); // doesnt show because nation is added to Person and doesnt apply for son object, 
+                                 // to reflect nation has to be added to Person constructor.
+                                 // the above can be achieved by using prototype
+
+        Person.prototype.nation = "Swizz";
+        var son = new Person("Havi", "Buvi",  1, "male", "American");
+        console.log("after Prototype: " + son.nation); // this gives Swizz as Nation
+
+        Person.prototype.name = function() {
+            return this.firstName + " " + this.lastName;
+        }
+        console.log(son.name());
+
+        var Orgs = [{"Name" : "Hashter", "est" : "2020", "ops" : "software"},
+                    {"Name" : "PhotoTag", "est" : "2021", "ops" : "Social"},
+                    {"Name" : "Hosp", "est" : "2022", "ops" : "Health Care"}
+                    ];
+        var org = {
+                "Name" : "Hashter", 
+                "est" : 2020, 
+                "ops" : "software",
+                get getName() { return this.Name },
+                set setOps(value) {this.ops = value}};
+
+        Object.defineProperty(Orgs, "getOrgName", {get : 
+        function() {
+            var txt = "";
+            for(var names in Orgs){
+                txt += " " + Orgs[names]["Name"];
+            }
+            return txt; } });
+        console.log(Orgs.getOrgName);
+        Object.defineProperty(org, "getOrgOps", { get : function() {return this.ops;} });
+        console.log("Org Ops: " + org.getOrgOps);
+        console.log(org.getName);
+
+        org.setOps = "Consulting";
+        console.log(org.ops);
+
+        // Constructor 
+        function Org(Name, est, ops) {
+            this.Name = Name;
+            this.est = est;
+            this.ops = ops;
+        }
+        // Object declaration
+        var orgObj = new Org("Prada", 1234, "Music");
+
+        Org.nation = "India";
+        console.log(orgObj.Name);
+        console.log(Org.nation);
+        console.log(orgObj.nation + " // this returns undefined as there is no prototyping"); 
+        Org.prototype.nation = "Swizz";
+        console.log(orgObj.nation + " // this return Swizz as prototype is present ") 
+        Org.prototype.setGrade = {
+            "grade" : 26,
+            "salary" : 1000
+        }
+
+        Org.prototype.chName = {
+            "Name" : "Tester"
+        }
+
+        Org.prototype.reviseSal = function(){
+            return orgObj.setGrade.salary += orgObj.setGrade.salary * orgObj.setGrade.grade/100;
+        };
+        console.log(orgObj.setGrade.grade);
+        console.log(orgObj.reviseSal());
+        console.log( orgObj.chName);
+        Object.defineProperty(org, "Name", {value : "tester", writable : false});
+        console.log("Changed the name from \"Prado\" to \"test\" using defineProperty : " + org.Name);
+        org.Name = "Hello";
+        console.log("Cannot Change the name from \"Prado\" to \"test\" as writable is defined as false : " + org.Name);
+        
+        console.log("org Oject: " + JSON.stringify(org));
+        console.log("Original Org Constructor: \n\n" + Org);
+        console.log(Org.prototype); //"Org after Prototye:
+
+        
+//        Object.defineProperties(Org, { getOrgName1 : {return this.Name }}, { getOrgOps1() { return this.ops } });
+//        console.log("Org Name: " + Org.getOrgName1 + " with Operations in " + Org.getOrgOps1);
+
+        // get all property's Names
+        console.log(Object.getOwnPropertyNames(org));
+        console.log(Object.keys(org));
+        console.log(Object.getPrototypeOf(org));
+
+        Object.preventExtensions(org);
+        console.log(Object.isExtensible(org));
+        Object.defineProperty(org, "Name", { value : "Hello all!!"});
+        console.log(org.Name);
+        
+        //Object.seal(org);
+        console.log(Object.isSealed(org));
+        //Object.defineProperty(org, "Name", {value : "rap"});
+        //console.log(org.Name);
+
+        Object.freeze(org);
+        console.log(Object.isFrozen(org));
+        //Object.defineProperty(org, "Name", { value : "freeze"});
+
+        (function selfInvoke() {
+            alert("Hello there, I self Invoked!! ");
+        })();
+
+    </script>
+
+</body>
+</html>

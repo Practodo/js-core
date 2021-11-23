@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p id="display">Hello</p>
+    <input type="text" name="name" id="name">
+    <br><br>
+    <button onclick="document.getElementById('display').innerHTML = 'Hello '+ document.getElementById('name').value">Click Here</button>
+    <br><br>
+    
+    <br> 
+    <button onclick=funNamePar(document.getElementById('name').value)>Click Function</button>
+    <button onclick=multiArray(3,0,2,1)>Click Array</button>
+    <button onclick="alert(Button1);">Click</button>
+    
+<button id="button" onclick="myFunction(button)">Click Me</button>
+
+<input type="button" name="register" id="reg" value="Search Bing" onclick="window.open('http://www.bing.com' , '_blank')" hidden=true/>
+
+<button id="buttonb" onclick="b();">Click a</button>
+
+<button id="global" onclick="globalCheck(3);">global</button>
+<p id="demo">
+    Hello
+</p>
+
+<p id="demo1">asdf</p>
+
+<p id="numberMap">asdf</p>
+<p id="numberFilter">asdf</p>
+<p id="numberReduce">asdf</p>
+<p id="numberReduceRight">asdf</p>
+<p id="numberEvery">asdf</p>
+<p id="numberSome">asdf</p>
+<p id="numberIndexOf">asdf</p>
+<p id="numberLastIndexOf">asdf</p>
+<p id="numberFind">asdf</p>
+<p id="numberFindIndex">asdf</p>
+
+
+<p id="className"></p>
+<p id="classAge"></p>
+
+<button onmouseover="this.innerHTML = Date()">what's the time ?</button>
+
+<p id="fun"></p>
+<p id="funfun"></p>
+<p id="sString"></p>
+
+<p id="debug">asdf</p>
+
+<script>
+    function variable(a, b)
+    {
+        return a * b;
+    }
+    var b = variable;
+    alert(b(10,5));
+    document.getElementById("demo").innerHTML = variable(20,30);
+
+    var person = {
+        firstName: "Pradeep",
+        lastName: "Naidu",
+        age: 30,
+        fullName: function(){
+           return this.firstName + " " + this.lastName
+        } 
+    };
+    person.gender = "male";
+    person['height'] = 6.1;
+
+    var fullName = person.fullName();
+    document.getElementById("fun").innerHTML = person.firstName;
+    document.getElementById("funfun").innerHTML = fullName;
+    console.log(person);
+
+    delete person.gender;
+    delete person['height'];
+
+    var props = {
+            a: "apple",
+            b: "ball",
+            c: "cat",
+            d: "dog"
+        };
+
+    function checkProp(value) {
+        alert(value);
+        if(props.hasOwnProperty(value)){
+            console.log(props[value]);
+            return props[value];
+        }
+        else
+            return "Not Found";
+    }
+
+var jsonVal = {
+  "requestContext": {
+    "consumerAppId": "IRIS",
+    "consumerAppType": "IA",
+    "correlationId": "B48EC9D26F784EDAE05400144FF8D5E3",
+    "realTimeResponseRequired": true,
+    "source": "ASYNC-REFILL"
+  },
+  "commandSet": [
+    {
+      "command": "",
+      "recordId": "262660222",
+      "fields": [
+        {
+          "fieldName": "PATIENTID",
+          "fieldType": "String",
+          "fieldValue": "102518000"
+        },
+        {
+          "fieldName": "RXNUMBER",
+          "fieldType": "String",
+          "fieldValue": "262660222"
+        },
+        {
+          "fieldName": "RXPHARMACYCODE",
+          "fieldType": "String",
+          "fieldValue": "1"
+        }
+      ]
+    }
+  ]
+};
+
+var copyJsonVal = JSON.parse(JSON.stringify(jsonVal));
+console.log(copyJsonVal.requestContext.source);
+console.log(JSON.stringify(copyJsonVal));
+console.log("copyJsonVal: " + copyJsonVal.requestContext.source);
+console.log("copyJsonVal: FieldName: " + copyJsonVal.commandSet[0].fields[0].fieldName);
+jsonVal.requestContext.source = "REFILL";
+
+console.log(jsonVal.requestContext.source);
+console.log(jsonVal.requestContext.consumerAppId);
+console.log(jsonVal.requestContext["consumerAppId"]);
+console.log(jsonVal.commandSet[0].recordId);
+
+console.log(JSON.stringify(jsonVal));
+
+var myArr = [];
+
+var i=0;
+while (i < 5) {
+    myArr.push(i);
+    i++;
+}
+
+console.log(myArr);
+
+
+var contacts  = [
+        {
+            "firstname" : "prado",
+            "lastname" : "neo",
+            "age" : "30",
+            "likes" : ["pizza", "chicken", "fish", "mutton"]
+        },
+        {
+            "firstname" : "pradeep",
+            "lastname" : "naidu",
+            "age" : "31",
+            "likes" : ["cheese", "bread", "egg", "potato"]
+        },
+        {
+            "firstname" : "bob",
+            "lastname" : "marley",
+            "age" : "40",
+            "likes" : ["curry", "cricket", "batting", "chatting"]
+        },
+        {
+            "firstname" : "Carl",
+            "lastname" : "John",
+            "age" : "20",
+            "likes" : ["playing", "chess", "throw", "ball"]
+        },
+        {
+            "firstname" : "Have",
+            "lastname" : "harl",
+            "age" : "1",
+            "likes" : ["Ann", "havi", "fish", "mutton"]
+        }
+    ]; 
+
+
+function contactsLookup(name, prop) {
+    for(var i=0; i< contacts.length; i++) {
+        if(contacts[i].firstname === name) {
+            return contacts[i][prop] || "No such Contact";
+        }   
+    }
+    return "No such contact";
+};
+
+console.log(contactsLookup("bob", "likes"));
+
+//Multiple Terenary Operator
+function multiTerenary(num) {
+    return num < 0 ? "Negative" : num > 0 ? "Positive" : num == 0 ? "Zero" : "Undefined";
+};
+// console.log(a);
+// console.log(b);
+console.log(multiTerenary(b));
+
+//let and var
+function varLet() {
+    let i = "hello";
+    const S = [2, 5, 7];
+    if(true) {
+        let i = "bye";
+        console.log("i: " + i);
+    }
+    //S = [5, 2, 7];
+    S[0] = 10;
+    S[1] = 20;
+    S[2] = 30;
+
+    console.log(S);
+    console.log("i: " + i);
+};
+
+varLet();
+// var and let
+
+//Object Mutation
+function ObjMutation() {
+    const MATH_CONSTANTS = {
+        PI: 3.14
+    };
+
+    Object.freeze(MATH_CONSTANTS);
+
+    try{
+        MATH_CONSTANTS.PI = 99;
+    }
+    catch( ex ){
+        console.log(ex);
+    }   
+    console.log(MATH_CONSTANTS.PI);
+    return MATH_CONSTANTS.PI;
+};
+
+ObjMutation();
+
+//Object Mutation
+
+// Arrow Function
+var date = function() {
+    return new Date();
+};
+
+console.log(date);
+// with arrow function
+var date1 = () => new Date();
+console.log(date1);
+
+let arrConcat1 = function(arr1, arr2) {
+    return arr1.concat(arr2);
+};
+console.log(arrConcat1([2, 3], [1, 6, 7]));
+
+// above function with arrow function
+let arrConcat = (arr1, arr2) => arr1.concat(arr2); 
+console.log(arrConcat([1,2],[3, 4, 5]));
+
+// Arrow function without () -- val is the paramter like --> hello(val)
+let greet = val => "Hello " + val;
+document.getElementById('numberIndexOf').innerHTML = greet('Greetings!!');
+
+var x = val => "Hello" + val;
+alert(x(" Arrow Function"));
+// Arrow Function
+
+// For loop 
+function forLoop(){
+    var i = 5;
+    for (; i < 10; i++) {
+        console.log("i: " + i);
+    }
+    console.log("i Value: " + i);
+};
+ 
+forLoop();
+
+
+function forLoopLet(){
+    let i = 5;
+    for (let i=0; i < 10; i++) {
+        console.log("i-let: " + i);
+    }
+    console.log("i-Let Value: " + i);
+    console.log(4 ** 5);
+    var a = 5;
+    console.log(typeof(a));
+    document.getElementById('demo1').innerHTML = a;
+//    console.log();
+};
+
+forLoopLet();
+
+// for loop
+var x = 40;
+//x << 2;
+console.log(x >>> 2);
+
+let marks = [{
+                studentId : 1,
+                english : 90,
+                maths : 100
+            },
+            {
+                studentId : 2,
+                english : 100,
+                maths : 95
+            },
+            {
+                studentId : 3,
+                english : 99,
+                maths : 99
+            }
+        ];
+
+let student = [{ 
+                studentId : 1,
+                name : "Pradeep",
+                age : 30,
+                student :function(){return this}, 
+                marks: marks              },
+              { 
+                studentId : 2,
+                name : "Prado",
+                age : 31,
+                marks: marks
+              }
+            ];
+
+console.log(JSON.stringify(student));              
+console.log(student[0].student());              
+
+function stringDemo(a, b){
+    if(a === b){
+        console.log("equal");
+        console.log(typeof(a));
+        console.log(typeof(b));
+    }
+    else{
+        console.log("not equal")
+        console.log(typeof(a));
+        console.log(typeof(b));
+    }
+}
+
+stringDemo(3, "3");
+
+console.log(typeof("100"/"10"));
+
+
+var numbers1 = [45, 4, 9, 16, 25];
+var numbers2 = numbers1.map(myFunction);
+
+var numbers = [45, 4, 9, 16, 25];
+var over18 = numbers.filter(myFunction);
+
+document.getElementById("demo").innerHTML = over18;
+console.log(Array.isArray(over18));
+
+console.log(Array.isArray(numbers2));
+numbers2.forEach(myFunction);
+
+function myFunction(value){
+    return value + ", ";
+}
+
+console.log(numbers2);
+
+
+// Array Functions
+
+var numberx = [20, 34, 1, 5, 14, 8];
+numberx.forEach(functionx);
+
+var numberMap = numberx.map(myFunctionMap);
+
+var numberFilter =  numberx.filter(myFunctionFilter);
+
+var numberReduce = numberx.reduce(myFunctionReduce);
+
+var numberReduceRight = numberx.reduceRight(myFunctionReduceRight);
+
+var numberEvery = numberx.every(myFunctionEvery);
+
+var numberSome = numberx.some(myFunctionSome);
+
+var numberFind = numberx.find(myFunctionFind);
+
+var numberFindIndex = numberx.findIndex(myFunctionFindIndex);
+
+function functionx(value){
+    return value + ",";
+}
+console.log(numberx); 
+
+function functionx(value){
+    return value * 2;
+}
+
+function myFunctionMap(value){
+    return value * 2;
+}
+document.getElementById('numberMap').innerHTML = numberMap;
+
+function myFunctionFilter(value){
+    return value < 12;
+}
+document.getElementById('numberFilter').innerHTML = numberFilter;
+
+function myFunctionReduce(total, value){
+    return total + value;
+}
+document.getElementById('numberReduce').innerHTML = numberReduce;
+
+function myFunctionReduceRight(total, value){
+    return total - value;
+}
+document.getElementById('numberReduceRight').innerHTML = numberReduceRight;
+
+
+function myFunctionEvery(value){
+    return value > 12;
+}
+document.getElementById('numberEvery').innerHTML = numberEvery;
+
+
+function myFunctionSome(value){
+    return value > 12;
+}
+document.getElementById('numberSome').innerHTML = numberSome;
+
+function myFunctionFind(value){
+    return value > 18;
+}
+document.getElementById('numberFind').innerHTML = numberFind;
+
+function myFunctionFindIndex(value){
+    return value < 18;
+}
+document.getElementById('numberFindIndex').innerHTML = numberFindIndex;
+
+
+function errorDemo(){
+    var message = "";
+    message = document.getElementById('errorDemo');
+    var x;
+    x = document.getElementById('invar').value;
+    message.innerHTML = "";
+    try{
+        if(x == "")
+            throw "Empty";
+        if(x > 20)
+            throw "More";
+        if(x < 10)
+            throw "Less";
+        if(isNaN(x))
+            throw "Not a Number";
+    }
+    catch(err){
+        message.innerHTML = "Input is " + err;
+        console.log("Input is " + err);
+    }
+    finally{
+        document.getElementById('invar').value = "";
+    }
+}
+
+//Classes Start
+class Student {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    getName(){
+        return this.name;
+    }
+    getAge() {
+        return this.age;
+    }
+}
+let myStudent = new Student("Pradeep", 30);
+ 
+document.getElementById('className').innerHTML = "Hello " + myStudent.getName();
+document.getElementById('classAge').innerHTML = "My age is " + myStudent.getAge();
+
+//Classes End
+
+
+var x = 15 * 5;
+//debugger;
+document.getElementById("debug").innerHTML = x;
+
+</script>
+    <button name ="checkProd" onclick="checkProp('c');">Check Prop</button>
+    <input type="text" id="invar">
+    <button onclick="errorDemo()">Check Error</button>
+    <p id="errorDemo"></p>
+    <p id="classAge">asdf</p>
+    <button onclick="errorDemo()">Check Check</button>
+    <br><br>
+    
+    <form name="formDemo" action="test.html" method="post" onsubmit="return formDemo()">
+        Enter Name: <input type="text" id="fname" name="fname">
+        <input type="submit" name="submit" id="submit">Click</input>
+    </form>
+
+    <script>
+        function formDemo(){
+            var fname = document.forms["formDemo"]["fname"].value;
+            if(fname == "Pradeep"){
+                alert("Please enter your name!!");
+                return false;
+            }
+        };
+
+        console.log(`'hello "pradeep" !!!'`);
+        var a = 10;
+        a = ++a;
+        console.log(a);
+        b = 5;
+        b += 5;
+        console.log('b = ' + b);
+        var string = "this is a string";
+        console.log (greeter);
+        var greeter = "say hello";
+        string += " hurray !!!";
+        console.log(string);
+        console.log("String Length: " + string.length);
+
+        console.log(string[string.length -1]);
+
+        function funName(){
+            alert("Hello Prado");
+        }
+
+        function funNamePar(name){
+            alert("Hello " + name);
+            myArray = new Array();
+            myArray.push(10);
+            myArray.push(20);
+            alert(myArray);
+            let i = 0; 
+            for (i; i < 5; ++i ) {
+                console.log("i - " + i);
+            }
+
+            let j=0;
+            for (; j < 5; ++j ) {
+                console.log("j - " + j);
+            }
+        }
+
+        function multiArray(a, b, c, d){
+            var student = [
+                    ["Pradeep", 25, ["Maths", "Computers", "History"]],
+                    ["Prado", 30, ["Maths", "English", "History"]],
+                    ["Jack", 35, ["Science", "Computers", "Geo"]] ];
+                    student.push(["Sreekar", 10, ["English", "Science", "Social"]]);
+            alert("Name: " + student[a][b] + "\nAge: " + student[a][d] + "\nSubject: " + student[a][c]);
+        }
+        funName();
+
+        function funNameas123(){
+            alert("Hello 1234");
+        }
+
+        funNameas123();
+
+        
+        function a(){
+            var aString = "hello return";
+            return aString;            
+        }
+
+        function b(){
+            alert("b");
+        }
+
+        var globalOne = 1;
+        
+        function globalVar() {
+            globalTwo = 2;
+        }
+
+        function globalCheck(a) {
+            alert ("Gobal Add: " + globalOne);
+            //a = 2;
+            if(a === 2){
+                console.log("a passed : " + a);
+            }
+            else{
+                console.log("a failed : " + a);
+            }
+
+            switch(a) {
+                case 1:
+                case 2:
+                case 3:
+                    console.log("1,2,3")
+                    break;
+                case 4:
+                case 5:
+                case 6:
+                    console.log("4, 5, 6")
+                    break;
+                default:
+                    console.log("default")
+                    break;
+            }
+            var und;
+            console.log(typeof "Pradeep");
+            console.log(typeof "4");
+            console.log(typeof 4);
+            console.log(und);
+        }
+        
+alert('he said "goodbye "'); alert("goodbye");
+
+function variable(a, b)
+{
+    return a * b;
+}
+var x = variable(10, 20);
+alert(x);
+document.getElementById("demo").innerHTML = variable(20,20);
+
+function myFunction(value) 
+{ 
+    document.getElementById('reg').hidden=false;
+    alert(value);
+}
+    </script>
+</body>
+
+</html>
